@@ -10,13 +10,19 @@ function sigmoide(n){
     return 1/ (1+Math.pow(Math.E,-n))
 }
 
+function relu(n){
+    return Math.max(n,0)
+}
+
 function activacion(n){
     let funcion = document.getElementById('ativacao').value
     console.log(document.getElementById('ativacao').value)
     if(funcion === '0'){
         return tanhiperbolica(n)
-    }else{
+    }else if(funcion === '1'){
         return sigmoide(n)
+    }else if(funcion === '2'){
+        return relu(n)
     }
 }
 
