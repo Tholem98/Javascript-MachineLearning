@@ -14,6 +14,14 @@ function relu(n){
     return Math.max(n,0)
 }
 
+function leaky_relu(n){
+    return Math.max(n,0.01)
+}
+
+function binary(n){
+    return (n>=0) ? 1 : 0
+}
+
 function activacion(n){
     let funcion = document.getElementById('ativacao').value
     console.log(document.getElementById('ativacao').value)
@@ -23,6 +31,10 @@ function activacion(n){
         return sigmoide(n)
     }else if(funcion === '2'){
         return relu(n)
+    }else if(funcion === '3'){
+        return leaky_relu(n)
+    }else if(funcion === '4'){
+        return binary(n)
     }
 }
 
