@@ -8,5 +8,5 @@ const config = {
 const regresion = new RgLM
 regresion.train(config)
 
-const result = regresion.predecir([[5,6,1],[6,7,1]])
+const result = regresion.predict([[5,6,1],[6,7,1]])
 console.log(result)

@@ -71,7 +71,7 @@ module.exports = class RegresionLinearMult{
         return ((resultado4 * p) + resultado5).toFixed(8)
     } 
     
-    predecir(p=[]){
+    predict(p=[]){
         
         const tempX = p
         let concatX = []
