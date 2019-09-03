@@ -28,4 +28,5 @@ function plot(type='scatter'){
     if(type=='lines') trace.type = 'scatter'
 
     const data = [trace]
+    
 }
