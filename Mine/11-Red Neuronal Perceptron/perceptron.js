@@ -204,14 +204,14 @@ function binaryStep(n=0){return (n>=0)?1:0}
 
 //feedForward([0.25],0.85,1000,'relu')
 
-train([
-    {input: [0,0],output: [0]},
-    {input: [0,1],output: [1]},
-    {input: [1,0],output: [1]},
-    {input: [1,1],output: [0]}
-])
+// train([
+//     {input: [0,0],output: [0]},
+//     {input: [0,1],output: [1]},
+//     {input: [1,0],output: [1]},
+//     {input: [1,1],output: [0]}
+// ])
 
-console.log(`0 por 0: ${predict([0,0])}`)
-console.log(`0 por 1: ${predict([0,1])}`)
-console.log(`1 por 0: ${predict([1,0])}`)
-console.log(`1 por 1: ${predict([1,1])}`)
+// console.log(`0 por 0: ${predict([0,0])}`)
+// console.log(`0 por 1: ${predict([0,1])}`)
+// console.log(`1 por 0: ${predict([1,0])}`)
+// console.log(`1 por 1: ${predict([1,1])}`)

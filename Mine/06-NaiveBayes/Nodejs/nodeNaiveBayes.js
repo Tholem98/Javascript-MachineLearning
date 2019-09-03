@@ -164,9 +164,35 @@ function predict(selecEntrada=''){
         
 }
 
-train({
-    input:['bom','mau','indiferente','indiferente'],
-    output:['positivo','negativo','positivo','negativo']}
-)
+//SOLO PARA PREDICTIVO:
+function predict(selecEntrada=''){
+    console.log({selecEntrada})
+    const nombreClases = retornaClases()
+    let nombre= ''
+    if(selecEntrada.toString().trim().length>0){
+        const naive = naiveBayes(selecEntrada)
+        
+        let probabilidad = 0
+        for(let i=0;i<nombreClases.length;i++){
+            const porcentual = Number(parseFloat(naive[nombreClases[i]] * 100).toFixed(4))
+            
+            if(porcentual >= probabilidad){
+                probabilidad = porcentual
+                nombre = nombreClases[i]
+            }
+        }
+    }else{
+        nombre = ''
+    }
 
-console.log(predict('mau'))
+  return nombre
+        
+}
+
+
+// train({
+//     input:['bom','mau','indiferente','indiferente'],
+//     output:['positivo','negativo','positivo','negativo']}
+// )
+
+// console.log(predict('mau'))

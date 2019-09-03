@@ -1,5 +1,5 @@
 let eixoX = [],
-eixoY = [].
+eixoY = [],
 clase = []
 
 function eliminaDuplicados(arr=[]){
@@ -109,12 +109,14 @@ function entropia(_eixo='',_valor=''){
 
     let str = ''
     for(let i=0;i<multiplicacion.length;i++){
-        str += multiplicacion[i] + '-'
+        str += multiplicacion[i] + ' - '
         //console.log({str})
     }
     str = str + '0'
 
-    let subtracciones = eval(Number(str))
+    let subtracciones = eval((str))
+	console.log(subtracciones)
+
     if(isNaN(subtracciones)) subtracciones = 0
     return subtracciones.toFixed(4)   
 }
@@ -125,6 +127,7 @@ function ganhos(_eixo=''){
     const entropiaGeral = entropia()
     
     if(_eixo == 'x'){
+
         let X = eliminaDuplicados(eixoX)
         let divisionesX = []
         const totalGeral = proporsiones()
@@ -139,6 +142,7 @@ function ganhos(_eixo=''){
         for(let i=0;i<divisionesX.length;i++){
             multiplicacionesX.push(entropias[i] * divisionesX[i])
         }
+
        let sumas = 0
        for(let i=0;i<multiplicacionesX.length;i++){
             sumas += multiplicacionesX[i]
@@ -196,6 +200,7 @@ function predict(entradaX=0,entradaY=0){
     let folha = ''
     const ganhoInfo = ganhos()
     let raiz = ganhoInfo[0]
+    console.log(ganhoInfo)
     raiz = raiz.toString().toLowerCase().trim()
 
     let arrayRaiz = []
@@ -251,13 +256,15 @@ function predict(entradaX=0,entradaY=0){
             }
         }
         let claseRepetida = []
+        console.log(folha)
+
         if(folha.toString().trim().length <=0){
             let claseTemp = retornaClases()
             for(let i=0;i<claseTemp.length;i++){
                 for(let j=0;j<clase.length;j++){
                     if(claseTemp[i] == clase[j]){
                         if(claseRepetida[i] != undefined){
-                            claseRepetida[i]++
+                            claseRepetida[i] += 1
                         }else{
                             claseRepetida[i] = 1
                         }
@@ -286,4 +293,4 @@ train({
     clase:['no','si','no','no','si','si'],
 })
 
-console.log(predict('lluvia','normal'))
+console.log(predict('nublado',''))

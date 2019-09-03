@@ -86,12 +86,12 @@ function predict(_entradaX=0,_entradaY=0){
     return entradaClase
 }
 
-train({
-    x: [1,2,30,40],
-    y: [3,4,50,60],
-    clase: [1,1,2,2]
-})
+// train({
+//     x: [1,2,30,40],
+//     y: [3,4,50,60],
+//     clase: [1,1,2,2]
+// })
 
-console.log(predict(120,190))
+// console.log(predict(120,190))
 
 

@@ -146,7 +146,7 @@ function train(config={}){
     if(config.output){clases = config.output}else{clases = ['']}
 }
 
-function predict(selecEntrada=''){
+function predictClasify(selecEntrada=''){
     const nombreClases = retornaClases()
     let nombre= ''
     if(selecEntrada.toString().trim().length>0){
@@ -169,9 +169,9 @@ function predict(selecEntrada=''){
         
 }
 
-train({
-    input:['bom','mau','indiferente','indiferente'],
-    output:['positivo','negativo','positivo','negativo']}
-)
+// train({
+//     input:['bom','mau','indiferente','indiferente'],
+//     output:['positivo','negativo','positivo','negativo']}
+// )
 
-console.log(predict('indiferente'))
+// console.log(predict('indiferente'))
