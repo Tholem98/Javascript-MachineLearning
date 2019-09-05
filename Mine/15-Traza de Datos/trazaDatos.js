@@ -10,8 +10,8 @@ function plot(type='scatter'){
         }
     }else if(type == 'bubble'){
         trace={
-            x=[1,2,3,4],
-            y=[1,2,3,4],
+            x:[1,2,3,4],
+            y:[1,2,3,4],
             marker:{
                 size:[10,20,30,40],
             }
@@ -28,5 +28,5 @@ function plot(type='scatter'){
     if(type=='lines') trace.type = 'scatter'
 
     const data = [trace]
-    
+    Plotly.newPlot('grafico',data,{},{showSendToCloud: true})
 }

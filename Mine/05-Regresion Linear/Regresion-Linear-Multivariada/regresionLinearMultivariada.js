@@ -1,4 +1,4 @@
-module.exports = class RegresionLinearMult{
+/*module.exports = */class RegresionLinearMult{
     train(config={}){
 
         if(config.input) {
@@ -19,7 +19,7 @@ module.exports = class RegresionLinearMult{
         this._config.input = this.X
         this._config.output = this.Y
     }
-    
+    /*
     saveModel(path='./model.json'){
         const fs = require('fs');
         fs.writeFileSync(path,JSON.stringify(this._config))
@@ -32,7 +32,7 @@ module.exports = class RegresionLinearMult{
         this.X = json.input
         this.Y = json.output
     }
-    
+    */
     producto(x=[],y=[]){
         let temp = []
         for(let i=0;i<x.length;i++){
@@ -77,7 +77,7 @@ module.exports = class RegresionLinearMult{
         let concatX = []
         for(let i=0;i<tempX.length;i++){
             const temp = tempX[i].reduce((a,b)=> a+''+b)
-            console.log(temp)
+            // console.log(temp)
             concatX.push(Number(temp))
         }
         p = concatX
