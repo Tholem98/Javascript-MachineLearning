@@ -13,6 +13,12 @@
     "inferrer": "^0.3.0",
     "js-regression": "^1.0.10",
     "mathjs": "^6.2.1",
-    "ml-regression-polynomial": "^2.0.0"
+    "ml-bayes": "^1.0.5",
+    "ml-kmeans": "^5.0.0",
+    "ml-knn": "^3.0.0",
+    "ml-regression-multivariate-linear": "^2.0.2",
+    "ml-regression-polynomial": "^2.0.0",
+    "node-decision-tree": "^0.1.2",
+    "skmeans": "^0.11.0"
   }
 }
