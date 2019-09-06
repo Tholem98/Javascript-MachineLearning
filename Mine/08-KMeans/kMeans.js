@@ -145,10 +145,10 @@ function predict(){
     }
 }
 
-train({
-    x: [1,3,5,25,45,65],
-    y: [2,4,6,35,55,75],
-    groups : 2
-})
+// train({
+//     x: [1,3,5,25,45,65],
+//     y: [2,4,6,35,55,75],
+//     groups : 2
+// })
 
-console.log(predict())
+// console.log(predict())

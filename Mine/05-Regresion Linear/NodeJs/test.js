@@ -8,5 +8,5 @@ const config = {
 const regresion = new regresionLinear()
 regresion.train(config)
 
-const result = regresion.predecir([5,6,7,8])
+const result = regresion.predecir([1])
 console.log(result)

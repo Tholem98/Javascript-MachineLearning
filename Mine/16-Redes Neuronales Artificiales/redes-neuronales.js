@@ -1,3 +1,5 @@
+//Algo falla, Analizar y buscar qué. Mismo error en perceptron
+
 let config = {},
 Weights = [],
 Inputs = [],
@@ -92,8 +94,8 @@ hiddenNodes = json.hiddenNodes
 }
 
 function predict(inputs=[]){
-    inputs = updateArray([inputs])
-    inputs = inputs[0]
+    // inputs = updateArray([inputs])
+    // inputs = inputs[0]
 
     let Outputs = []
     //encontrar la entrada del entrenamiento mas cercana a la entrada de aprendizaje
@@ -111,7 +113,7 @@ function predict(inputs=[]){
     let index = 0
     for(let i=0;i<diff.length;i++){
         if(diff[i].value<min){
-            min=diff[i]
+            min=diff[i].value
             index = diff[i].index
         }
     }
@@ -147,7 +149,10 @@ function predict(inputs=[]){
         }
         //console.log(output)
         // control del array de salida
-        Outputs.push(Number(output))
+        console.log(output)
+        Outputs.push(output)
+        console.log(Outputs)
+
     }
     return Outputs
 }
@@ -248,14 +253,14 @@ function binaryStep(n=0){return (n>=0)?1:0}
 
 //feedForward([0.25],0.85,1000,'relu')
 
-train([
-    {input: [0,0],output: [0]},
-    {input: [0,1],output: [1]},
-    {input: [1,0],output: [1]},
-    {input: [1,1],output: [0]}
-])
+// train([
+//     {input: [0,0],output: [1]},
+//     {input: [0,1],output: [0]},
+//     {input: [1,0],output: [0]},
+//     {input: [1,1],output: [1]}
+// ])
 
-console.log(`0 por 0: ${predict([0,0])}`)
-console.log(`0 por 1: ${predict([0,1])}`)
-console.log(`1 por 0: ${predict([1,0])}`)
-console.log(`1 por 1: ${predict([1,1])}`)
+// console.log(`0 por 0: ${predict([0,0])}`)
+// console.log(`0 por 1: ${predict([0,1])}`)
+// console.log(`1 por 0: ${predict([1,0])}`)
+// console.log(`1 por 1: ${predict([1,1])}`)

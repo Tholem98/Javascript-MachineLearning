@@ -39,25 +39,33 @@ function resultados(x=[],y=[],p=0){
 function regresionLinear(eixoX=[], eixoY=[]){
     const tamx = eixoX.length
     const tamy = eixoY.length
-
+    // console.log({eixoX,eixoY})
     const tempX = eixoX.slice(0,tamy)
     const tempY = eixoY
+    // console.log({tempX,tempY})
     
     const dif = tamx - tamy
     if(dif>0){
         let regresiones = []
         for(let i=0;i<dif;i++){
-            let temp= resultados(tempX,tempY,eixoX[tamy+i])
+            let temp= Number(resultados(tempX,tempY,eixoX[tamy+i]))
+            ult=eixoX[tamy+i]
+            console.log({ult,temp})
             regresiones.push(temp)
         }
         const novoY = tempY.concat(regresiones)
-        console.log(`eixo x: ${eixoX}\neixo y: ${novoY}`)
+        // console.log(`eixo x: ${eixoX}\neixo y: ${novoY}`)
+        return regresiones
+        // return novoY
+    }else{
+        return 0
+        // return eixoX
     }
 
 }
 
-regresionLinear(
-    [0,1,2,3,4,5],
-    [0,10,19,28,37]
-)
+// regresionLinear(
+//     [1,2,3,4,1],
+//     [10,20,30,40]
+// )
 

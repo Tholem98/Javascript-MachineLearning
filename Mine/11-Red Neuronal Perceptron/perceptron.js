@@ -70,12 +70,14 @@ function predict(inputs=[]){
 
     // let search = inputs.reduce((a,b)=>{Number(a+''+b)}),
     let search = inputs.reduce((a, b) => Number(a+''+b));
+    console.log({add,search})
     let index = add.indexOf(search)
 
     let limit = 1;
 	if(Targets[0]) limit = Targets[0].length;
     for(let i=0;i<limit;i++){
         // usar los pesos de la entrada del entrenamiento mas cercano
+        console.log(index)
         let matrizHidden = Weights[index].weights
         // console.log(index)
         // console.log(Weights[index])

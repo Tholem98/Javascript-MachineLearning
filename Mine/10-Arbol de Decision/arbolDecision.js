@@ -287,10 +287,10 @@ function predict(entradaX=0,entradaY=0){
     return folha
 }
 
-train({
-    x:['sol','nublado','lluvia','lluvia','sol','nublado'],
-    y:['anormal','normal','anormal','normal','normal','anormal'],
-    clase:['no','si','no','no','si','si'],
-})
+// train({
+//     x:['sol','nublado','lluvia','lluvia','sol','nublado'],
+//     y:['anormal','normal','anormal','normal','normal','anormal'],
+//     clase:['no','si','no','no','si','si'],
+// })
 
-console.log(predict('nublado',''))
+// console.log(predict('nublado',''))

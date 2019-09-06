@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mathjs": "^6.2.1"
+    "inferrer": "^0.3.0",
+    "js-regression": "^1.0.10",
+    "mathjs": "^6.2.1",
+    "ml-regression-polynomial": "^2.0.0"
   }
 }

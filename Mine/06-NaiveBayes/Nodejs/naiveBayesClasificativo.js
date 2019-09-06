@@ -146,7 +146,7 @@ function train(config={}){
     if(config.output){clases = config.output}else{clases = ['']}
 }
 
-function predictClasify(selecEntrada=''){
+function predict(selecEntrada=''){
     const nombreClases = retornaClases()
     let nombre= ''
     if(selecEntrada.toString().trim().length>0){

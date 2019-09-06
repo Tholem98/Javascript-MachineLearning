@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html>
+	<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="../10-Arbol de Decision/arbolDecision.js"></script>
+		<meta charset="utf-8">
+	   <title>Machine Learning</title>
+	</head>
+	<body>
+	   <nav class="navbar navbar-expand-sm bg-primary navbar-primary">
+	     <ul class="navbar-nav">
+	       <li class="nav-item">
+	         <a class="nav-link text-white" href="#" data-toggle="modal" data-target="#modalNovo">
+	         	Novo
+	     	 </a>
+	       </li>
+	     </ul>
+	   </nav>
+	   <br>
+	   <div class="container">
+	   	 <img src="img/logo.png" width="100px" height="100px" align="right">
+	     <h2>Inteligência Artificial e Machine Learning com JavaScript.</h2>
+	     <p>Árvore de Decisão</p>
+	     
+		 <div style="overflow-y:scroll; height: 250px;" class="mt-5">
+			  <table class="table table-striped">
+			    <thead>
+			      <tr>
+			        <th>Tiempo</th>
+			        <th>Unidad</th>
+			        <th>Lluvia</th>
+			      </tr>
+			    </thead>
+			    <tbody id="linhas">
+
+			    </tbody>
+			  </table>
+		 </div>
+		 <div class="bg-primary text-white" style="padding: 5px;">
+		   <div class="row">
+			   <label for="entradaX" class="ml-3 mr-2">Tiempo:</label>
+			   <select class="form-control col-md-2" id="selTiempo">
+			   	
+			   </select>
+
+			   <label for="entradaY" class="mr-2 ml-2">Unidad:</label>
+			   <select class="form-control col-md-2" id="selUnidad">
+			   	
+			   </select>
+
+			   <button type="button" class="btn btn-success ml-2 mr-5" onclick="retornaClasse()">Classificar</button>
+			   &nbsp;
+			   <label for="entradaC" class="mr-2 ml-2">Lluvia:</label>
+			   <input type="text" class="form-control col-md-4" id="selLluvia">
+		   </div>
+		 </div>
+	   </div>
+
+	   <div class="modal fade" id="modalNovo">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+
+		      <div class="modal-header">
+		        <h4 class="modal-title">Novo</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+
+		      <div class="modal-body">
+				  <div class="form-group">
+					<label for="eixoX">Tempo:</label>
+					<select class="form-control col-md-12" id="tiempo">
+						<option value="Soleado">Soleado</option>
+						<option value="Nublado">Nublado</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+				    <label for="eixoY">Unidad:</label>
+				    <select class="form-control col-md-12" id="unidad">
+						<option value="Baja">Baja</option>
+						<option value="Media">Media</option>
+						<option value="Alta">Alta</option>
+					</select>
+				  </div>
+				  <div class="form-group" align="right">
+					Lluvia:
+				    <label for="no" class="ml-3 mr-2">no</label>
+				    <input type="radio" name="lluvia" id="no" value="no" onclick="setLluvia('no')">
+					<label for="si" class="ml-3 mr-2">si</label>
+					<input type="radio" name="lluvia" id="si" value="si" checked="true" onclick="setLluvia('si')">
+				</div>			  
+		      </div>
+
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+		        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="cadastrar()">Confirmar</button>
+		      </div>
+
+		    </div>
+		  </div>
+	   </div>
+
+	   <script src="js/arbol.js"></script>
+	</body>
+</html>
