@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "brain.js": "^2.0.0-alpha.9",
     "inferrer": "^0.3.0",
     "js-regression": "^1.0.10",
     "mathjs": "^6.2.1",
@@ -19,6 +20,7 @@
     "ml-regression-multivariate-linear": "^2.0.2",
     "ml-regression-polynomial": "^2.0.0",
     "node-decision-tree": "^0.1.2",
-    "skmeans": "^0.11.0"
+    "skmeans": "^0.11.0",
+    "synaptic": "^1.1.4"
   }
 }
