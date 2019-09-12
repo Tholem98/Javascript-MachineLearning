@@ -198,8 +198,57 @@ module.exports = class CSV{
 
         return arrResult
     }
+    
+    insertOutput(path='./data.csv',outputs=[]){
+        path = path.toString().trim()
+        let data = this.fs.readFileSync(path,'utf8')
+        data = data.toString().trim()
+        const lines = data.split('\r\n')
 
+        const strTitles = lines[0]+''.trim()
+        const titles = strTitles.split(this.separador)
+        let arrIndex = []
+        const arrOutputs = this.output
+        for(let i=0;i<titles.length;i++){
+            let columnName = titles[i]+''.trim()
+            if(columnName!='undefined'){
+                for(let j=0;j<arrOutputs;j++){
+                    const outputName = arrOutputs[j]+''.trim()
+                    if(columnName==outputName) arrIndex.push(i)
+                }
+            }
+        }
+
+        let outputLine = 0
+        let strCSV = strTitles+'\r\n'
+        for(let line=1;line<lines.length;line++){
+            let outputCell = 0
+            let cells = lines[line].split(this.separador)
+            for(let c=0;c<cells.length;c++){
+                if(arrIndex.indexOf(c)>-1){
+                    const cell = cells[c]+''.trim()
+                    if(cell.length<=0){
+                        if(outputs[outputLine][outputCell]!=undefined){
+                            cells[c] = outputs[outputLine][outputCell]
+                            outputCell++
+                        }else{
+                            cells[c]=outputs[outputLine][outputCell-1]
+                            if(cells[c]==undefined)
+                                cells[c]=outputs[outputLine-1][outputCell]
+                            if(cells[c]==undefined)
+                            cells[c]=outputs[outputLine-1][outputCell-1]
+                        }
+                    }
+                }
+            }
+            if(outputCell>0) outputLine++
+            strCSV += cells.toString().trim().replace(/,/g, this.separador)+'\r\n'
+        }
+        this.fs.writeFileSync(path,strCSV.trim())
+    }
 }
+
+
 /*
 const csv = new CSV()
 // let result = csv.csvToJsonXY('../../Portugues/Recursos/13-Manipulacao-de-arquivos-csv/decision-tree.csv')

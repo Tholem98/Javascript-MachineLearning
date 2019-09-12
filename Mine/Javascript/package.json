@@ -1,5 +1,5 @@
 {
-  "name": "Mine",
+  "name": "mine",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -20,6 +20,7 @@
     "ml-regression-multivariate-linear": "^2.0.2",
     "ml-regression-polynomial": "^2.0.0",
     "node-decision-tree": "^0.1.2",
+    "node-mind": "^1.0.1",
     "skmeans": "^0.11.0",
     "synaptic": "^1.1.4"
   }
