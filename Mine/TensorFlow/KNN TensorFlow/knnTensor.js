@@ -18,7 +18,7 @@ function knn(features,labels,predictionPoint,k){
         .unstack()
 
         return arrayTensor
-        .sort((a,b) => a.get(0)>b.get(0)?1:-1)
+        .sort((a,b) => a.arraySync(0)>b.arraySync(0)?1:-1)
         .slice(0,k)
         .reduce((acc,pair)=> acc + pair[1],0) / k
 }

@@ -2,25 +2,28 @@ require('@tensorflow/tfjs-node')
 const tf = require('@tensorflow/tfjs')
 const loadCSV = require('../KNN TensorFlow/load-csv')
 const _ = require('lodash')
-
+// const plot = require('node-remote-plot') //Para hacer un grafico linear con los datos 
 
 class LinearRegression{
     constructor(features,labels,options){
         this.features = this.processFeatures(features)
         this.labels = tf.tensor(labels)
-
+        this.mseHistory = []
 
         this.options=Object.assign({
             learningRate:0.1,
-            iterations: 10000,
+            iterations: 100,
         },options)
         
-        this.weights = tf.zeros([2,1])
+        this.weights = tf.zeros([this.features.shape[1],1])
     }
     
     train(){
         for(let i=0;i< this.options.iterations;i++){
+            // console.log(this.options.learningRate)
             this.gradientDescent()
+            this.recordMSE()
+            this.updateLearningRate()
         }
     }
     
@@ -77,24 +80,49 @@ class LinearRegression{
 
     }
 
+    recordMSE(){
+        const mse = this.features.matMul(this.weights)
+        .sub(this.labels)
+        .pow(2)
+        .sum()
+        .div(this.features.shape[0])
+        .arraySync()
+
+        this.mseHistory.unshift(mse)
+    }
+
+    updateLearningRate(){
+        if(this.mseHistory.length<2){
+            return
+        }
+
+        if(this.mseHistory[0]>this.mseHistory[1]){
+            this.options.learningRate /= 2
+        }else{
+            this.options.learningRate *= 1.5
+        }
+
+    }
+
 }
 
 let {features, labels, testFeatures, testLabels} = 
 loadCSV('./cars.csv',{
     shuffle:true,
     splitTest:50,
-    dataColumns: ['horsepower'],
+    dataColumns: ['horsepower','weight','displacement'],
     labelColumns: ['mpg'],
 })
 
 const regression = new LinearRegression(features,labels,{
-    learningRate:0.1,
+    learningRate:10,
     iterations:100,
 })
 
 
 regression.train()
 
+console.log("mse:",regression.mseHistory)
 console.log(regression.test(testFeatures,testLabels))
 
 // console.log(
