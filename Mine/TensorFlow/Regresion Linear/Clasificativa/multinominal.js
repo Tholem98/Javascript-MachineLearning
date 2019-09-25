@@ -4,7 +4,7 @@ const loadCSV = require('../../KNN TensorFlow/load-csv')
 const _ = require('lodash')
 
 
-class LogisticRegression{
+class MultinominalLogisticRegression{
     constructor(features,labels,options){
         this.features = this.processFeatures(features)
         this.labels = tf.tensor(labels)
@@ -16,7 +16,7 @@ class LogisticRegression{
             decisionBoundary:0.5,
         },options)
         
-        this.weights = tf.zeros([this.features.shape[1],1])
+        this.weights = tf.zeros([this.features.shape[1],this.labels.shape[1]])
     }
     
     train(features, labels, batch){
@@ -39,7 +39,7 @@ class LogisticRegression{
     }
     
     gradientDescent(features, labels){
-        const currentGuesses = features.matMul(this.weights)
+        const currentGuesses = features.matMul(this.weights).softmax()
         const differences = currentGuesses.sub(labels)
         
         const slopes = features
@@ -52,11 +52,10 @@ class LogisticRegression{
  
     test(testFeatures, testLabels){
         const predictions = this.predict(testFeatures).round()
-       testLabels = tf.tensor(testLabels)
+       testLabels = tf.tensor(testLabels).argMax(1)
 
        const incorrect = predictions
-       .sub(testLabels)
-       .abs()
+       .notEqual(testLabels)
        .sum()
        .arraySync()
 
@@ -89,7 +88,7 @@ class LogisticRegression{
     recordCrossEntropy(){
         const guesses = this.features
         .matMul(this.weights)
-        .sigmoid()
+        .softmax()
 
         const termOne = this.labels
         .transpose()
@@ -130,9 +129,8 @@ class LogisticRegression{
     predict(observations){
         return this.processFeatures(observations)
         .matMul(this.weights)
-        .sigmoid()
-        .greater(this.options.decisionBoundary)
-        .cast('float32')
+        .softmax()
+        .argMax(1)
     }
 
 }
@@ -168,4 +166,4 @@ console.log(result)
 // )
 */
 
-module.exports = LogisticRegression
+module.exports = MultinominalLogisticRegression

@@ -19,9 +19,12 @@ loadCSV('../cars.csv',{
 const regression = new LogisticRegression(features, labels, {
     learningRate: 0.5,
     iterations: 100,
-    batchSize: 50
+    batchSize: 10,
+    decisionBoundary:0.55
 })
 
 regression.train()
 regression.predict([[130,307,1.75]]).print()
 regression.predict([[88,97,1.065]]).print()
+
+console.log(regression.test(testFeatures,testLabels))
