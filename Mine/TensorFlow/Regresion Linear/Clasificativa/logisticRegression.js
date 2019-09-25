@@ -4,7 +4,7 @@ const loadCSV = require('../../KNN TensorFlow/load-csv')
 const _ = require('lodash')
 
 
-class LinearRegression{
+class LogisticRegression{
     constructor(features,labels,options){
         this.features = this.processFeatures(features)
         this.labels = tf.tensor(labels)
@@ -121,7 +121,7 @@ class LinearRegression{
     }
 
 }
-
+/*
 let {features, labels, testFeatures, testLabels} = 
 loadCSV('../cars.csv',{
     shuffle:true,
@@ -151,3 +151,4 @@ console.log(result)
 // `Updated M: ${regression.weights.arraySync()[1][0]}
 // Updated B: ${regression.weights.arraySync()[0][0]}`
 // )
+*/
