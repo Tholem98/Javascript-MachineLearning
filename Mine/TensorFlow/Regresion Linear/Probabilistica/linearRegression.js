@@ -1,6 +1,6 @@
 require('@tensorflow/tfjs-node')
 const tf = require('@tensorflow/tfjs')
-const loadCSV = require('../KNN TensorFlow/load-csv')
+const loadCSV = require('../../KNN TensorFlow/load-csv')
 const _ = require('lodash')
 
 

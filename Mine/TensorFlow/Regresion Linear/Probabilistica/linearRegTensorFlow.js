@@ -1,6 +1,6 @@
 require('@tensorflow/tfjs-node')
 const tf = require('@tensorflow/tfjs')
-const loadCSV = require('../KNN TensorFlow/load-csv')
+const loadCSV = require('../../KNN TensorFlow/load-csv')
 const _ = require('lodash')
 
 
@@ -8,43 +8,29 @@ class LinearRegression{
     constructor(features,labels,options){
         this.features = this.processFeatures(features)
         this.labels = tf.tensor(labels)
-        this.mseHistory = []
+
 
         this.options=Object.assign({
             learningRate:0.1,
             iterations: 10000,
         },options)
         
-        this.weights = tf.zeros([this.features.shape[1],1])
+        this.weights = tf.zeros([2,1])
     }
     
-    train(features, labels, batch){
-        batchQuantity = Math.floor(this.features.shape[0] / this.options.batchSize)
-        
+    train(){
         for(let i=0;i< this.options.iterations;i++){
-            for(let j=0;j<batchQuantity;j++){
-                const {batchSize} = this.options
-                const startIndext = j*batchSize
-
-                const featureSlice = this.features.slice([startIndext,0],[batchSize, -1])
-                const labelSlice = this.labels.slice([startIndext,0],[batchSize, -1])
-
-                this.gradientDescent(featureSlice, labelSlice)
-            }
-
-            this.recordMSE()
-            this.updateLearningRate()
+            this.gradientDescent()
         }
     }
     
-    gradientDescent(features, labels){
-        const currentGuesses = features.matMul(this.weights)
-        const differences = currentGuesses.sub(labels)
+    gradientDescent(){
+        const currentGuesses = this.features.matMul(this.weights)
+        const differences = currentGuesses.sub(this.labels) 
         
-        const slopes = features
-        .transpose()
+        const slopes = this.features.transpose()
         .matMul(differences)
-        .div(features.shape[0])
+        .div(this.features.shape[0])
 
         this.weights = this.weights.sub(slopes.mul(this.options.learningRate))
     }
@@ -91,30 +77,6 @@ class LinearRegression{
 
     }
 
-    recordMSE(){
-        const mse = this.features.matMul(this.weights)
-        .sub(this.labels)
-        .pow(2)
-        .sum()
-        .div(this.features.shape[0])
-        .arraySync()
-
-        this.mseHistory.unshift(mse)
-    }
-
-    updateLearningRate(){
-        if(this.mseHistory.length<2){
-            return
-        }
-
-        if(this.mseHistory[0]>this.mseHistory[1]){
-            this.options.learningRate /= 2
-        }else{
-            this.options.learningRate *= 1.5
-        }
-
-    }
-
 }
 
 let {features, labels, testFeatures, testLabels} = 
@@ -128,13 +90,11 @@ loadCSV('./cars.csv',{
 const regression = new LinearRegression(features,labels,{
     learningRate:0.1,
     iterations:100,
-    batchSize: 10,
 })
 
 
 regression.train()
 
-console.log("mse:",regression.mseHistory)
 console.log(regression.test(testFeatures,testLabels))
 
 // console.log(

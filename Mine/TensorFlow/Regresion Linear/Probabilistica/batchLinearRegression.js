@@ -1,11 +1,12 @@
 require('@tensorflow/tfjs-node')
 const tf = require('@tensorflow/tfjs')
-const loadCSV = require('../KNN TensorFlow/load-csv')
+const loadCSV = require('../../KNN TensorFlow/load-csv')
 const _ = require('lodash')
-// const plot = require('node-remote-plot') //Para hacer un grafico linear con los datos 
+
 
 class LinearRegression{
     constructor(features,labels,options){
+        // console.log(features)
         this.features = this.processFeatures(features)
         this.labels = tf.tensor(labels)
         this.mseHistory = []
@@ -18,22 +19,32 @@ class LinearRegression{
         this.weights = tf.zeros([this.features.shape[1],1])
     }
     
-    train(){
+    train(features, labels, batch){
+        const batchQuantity = Math.floor(this.features.shape[0] / this.options.batchSize)
         for(let i=0;i< this.options.iterations;i++){
-            // console.log(this.options.learningRate)
-            this.gradientDescent()
+            for(let j=0;j<batchQuantity;j++){
+                const {batchSize} = this.options
+                const startIndext = j*batchSize
+                
+                const featureSlice = this.features.slice([startIndext,0],[batchSize, -1])
+                const labelSlice = this.labels.slice([startIndext,0],[batchSize, -1])
+
+                this.gradientDescent(featureSlice, labelSlice)
+            }
+
             this.recordMSE()
             this.updateLearningRate()
         }
     }
     
-    gradientDescent(){
-        const currentGuesses = this.features.matMul(this.weights)
-        const differences = currentGuesses.sub(this.labels) 
+    gradientDescent(features, labels){
+        const currentGuesses = features.matMul(this.weights)
+        const differences = currentGuesses.sub(labels)
         
-        const slopes = this.features.transpose()
+        const slopes = features
+        .transpose()
         .matMul(differences)
-        .div(this.features.shape[0])
+        .div(features.shape[0])
 
         this.weights = this.weights.sub(slopes.mul(this.options.learningRate))
     }
@@ -66,16 +77,15 @@ class LinearRegression{
         }else{
             features = this.standarize(features)
         }
-        
         return features    
     }
     
     standarize(features){
         const {mean, variance} = tf.moments(features,0)
-
+        
         this.mean = mean
         this.variance = variance
-
+        
         return features.sub(mean).div(variance.pow(0.5))
 
     }
@@ -104,10 +114,16 @@ class LinearRegression{
 
     }
 
+    predict(observations){
+
+        return this.processFeatures(observations)
+        .matMul(this.weights)
+    }
+
 }
 
 let {features, labels, testFeatures, testLabels} = 
-loadCSV('./cars.csv',{
+loadCSV('../cars.csv',{
     shuffle:true,
     splitTest:50,
     dataColumns: ['horsepower','weight','displacement'],
@@ -115,16 +131,22 @@ loadCSV('./cars.csv',{
 })
 
 const regression = new LinearRegression(features,labels,{
-    learningRate:10,
+    learningRate:0.1,
     iterations:100,
+    batchSize: 10,
 })
 
 
 regression.train()
 
-console.log("mse:",regression.mseHistory)
-console.log(regression.test(testFeatures,testLabels))
+// console.log("mse:",regression.mseHistory)
+// console.log(regression.test(testFeatures,testLabels))
+const result = regression.predict([
+    [120,2,380]
+    // [135,2.1,420],
 
+]).arraySync()
+console.log(result)
 // console.log(
 // `Updated M: ${regression.weights.arraySync()[1][0]}
 // Updated B: ${regression.weights.arraySync()[0][0]}`
