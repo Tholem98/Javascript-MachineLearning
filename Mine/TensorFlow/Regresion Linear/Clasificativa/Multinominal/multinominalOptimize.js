@@ -1,6 +1,6 @@
 require('@tensorflow/tfjs-node')
 const tf = require('@tensorflow/tfjs')
-const loadCSV = require('../../KNN TensorFlow/load-csv')
+const loadCSV = require('../../../KNN TensorFlow/load-csv')
 const _ = require('lodash')
 
 
@@ -26,11 +26,13 @@ class MultinominalLogisticRegression{
             for(let j=0;j<batchQuantity;j++){
                 const {batchSize} = this.options
                 const startIndext = j*batchSize
-
-                const featureSlice = this.features.slice([startIndext,0],[batchSize, -1])
-                const labelSlice = this.labels.slice([startIndext,0],[batchSize, -1])
-
-                this.gradientDescent(featureSlice, labelSlice)
+                this.weights = tf.tidy(()=>{
+                    
+                    const featureSlice = this.features.slice([startIndext,0],[batchSize, -1])
+                    const labelSlice = this.labels.slice([startIndext,0],[batchSize, -1])
+                    
+                    return this.gradientDescent(featureSlice, labelSlice)
+                })
             }
 
             this.recordCrossEntropy()
@@ -47,7 +49,7 @@ class MultinominalLogisticRegression{
         .matMul(differences)
         .div(features.shape[0])
 
-        this.weights = this.weights.sub(slopes.mul(this.options.learningRate))
+        return this.weights.sub(slopes.mul(this.options.learningRate))
     }
  
     test(testFeatures, testLabels){
@@ -88,31 +90,35 @@ class MultinominalLogisticRegression{
     }
 
     recordCrossEntropy(){
-        const guesses = this.features
-        .matMul(this.weights)
-        .softmax()
-
-        const termOne = this.labels
-        .transpose()
-        .matMul(guesses.log())
-
-        const termTwo = this.labels
-        .mul(-1)
-        .add(1)
-        .transpose()
-        .matMul(
-            guesses
+        const finalTerm = tf.tidy(()=>{
+            
+            const guesses = this.features
+            .matMul(this.weights)
+            .softmax()
+            
+            const termOne = this.labels
+            .transpose()
+            .matMul(guesses.add(1e-7).log())
+            
+            const termTwo = this.labels
             .mul(-1)
             .add(1)
-            .log()
-        )
-
-            const finalTerm = termOne.add(termTwo)
-            .div(this.features.shape[0])
-            .mul(-1)
-            .arraySync(0,0)
-
-        this.crossEHistory.unshift(finalTerm)
+            .transpose()
+            .matMul(
+                guesses
+                .mul(-1)
+                .add(1)
+                .add(1e-7)
+                .log()
+                )
+                
+                return termOne.add(termTwo)
+                .div(this.features.shape[0])
+                .mul(-1)
+                .arraySync(0,0)
+            })
+                // console.log(finalTerm)
+            this.crossEHistory.unshift(finalTerm)
     }
 
     updateLearningRate(){
@@ -138,7 +144,7 @@ class MultinominalLogisticRegression{
 }
 /*
 let {features, labels, testFeatures, testLabels} = 
-loadCSV('../cars.csv',{
+loadCSV('../../cars.csv',{
     shuffle:true,
     splitTest:50,
     dataColumns: ['horsepower'],

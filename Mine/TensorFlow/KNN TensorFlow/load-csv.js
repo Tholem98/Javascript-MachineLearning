@@ -11,16 +11,14 @@ function extractColumns(data, columnNames) {
     return extracted;
   }
   
-  module.exports = function loadCSV(
-    filename,
+  module.exports = function loadCSV(filename,
     {
       dataColumns = [],
       labelColumns = [],
       converters = {},
       shuffle = false,
       splitTest = false
-    }
-  ) {
+    }) {
     let data = fs.readFileSync(filename, { encoding: 'utf-8' });
     data = _.map(data.split('\n'), d => d.split(','));
     data = _.dropRightWhile(data, val => _.isEqual(val, ['']));

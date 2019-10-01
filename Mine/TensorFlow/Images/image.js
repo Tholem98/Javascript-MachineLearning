@@ -1,7 +1,7 @@
 require('@tensorflow/tfjs-node')
 const tf = require('@tensorflow/tfjs')
-const MultinominalLogisticRegression = require('../Regresion Linear/Clasificativa/multinominal')
-const LogisticRegression = require('../Regresion Linear/Clasificativa/logisticRegression')
+const MultinominalLogisticRegression = require('../Regresion Linear/Clasificativa/Multinominal/multinominal')
+const LogisticRegression = require('../Regresion Linear/Clasificativa/Logistic/logisticRegression')
 const _ = require('lodash')
 const mnist = require('mnist-data')
 
