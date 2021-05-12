@@ -13,7 +13,7 @@
     "brain.js": "^2.0.0-alpha.9",
     "inferrer": "^0.3.0",
     "js-regression": "^1.0.10",
-    "mathjs": "^6.2.1",
+    "mathjs": "^7.5.1",
     "ml-bayes": "^1.0.5",
     "ml-kmeans": "^5.0.0",
     "ml-knn": "^3.0.0",
